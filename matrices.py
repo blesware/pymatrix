@@ -7,9 +7,9 @@ Contiene:
  - generar_pdf: genera siempre un .tex en ./tex/ y, si puede, un .pdf en ./pdf/.
 """
 
-import random
 import os
-import numpy as np
+import subprocess
+import random
 from pylatex import Document, NoEscape, Package
 from pylatex.errors import CompilerError
 
@@ -80,5 +80,5 @@ def generar_pdf(matriz: list, nombre_archivo: str):
         pdf_path = pdf_base + '.pdf'
         doc.generate_pdf(pdf_base, clean_tex=True, compiler='pdflatex')
         print(f"Archivo .pdf generado en: {os.path.abspath(pdf_path)}")
-    except CompilerError:
+    except (CompilerError, subprocess.CalledProcessError):
         print("No se pudo compilar, no se encontro compilador de LaTeX, Solo se creó el .tex")
